@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #141E30, #243B55);
+            background: black;
             color: white;
             text-align: center;
         }
@@ -23,13 +23,15 @@
         h1 {
             font-size: 50px;
             margin: 0;
+            color: white;
         }
         p {
             font-size: 20px;
+            color: gray;
         }
         .btn {
-            background: #1E90FF;
-            color: white;
+            background: white;
+            color: black;
             padding: 15px 30px;
             border: none;
             cursor: pointer;
@@ -38,11 +40,32 @@
             border-radius: 5px;
         }
         .btn:hover {
-            background: #1C86EE;
+            background: gray;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background: #111;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        .navbar a:hover {
+            color: gray;
         }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
     <div class="container">
         <h1>Vítejte na Infinity</h1>
         <p>Objevte nekonečné možnosti s naší stránkou.</p>
