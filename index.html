@@ -256,6 +256,22 @@
             document.getElementById("bossTimersPage").style.display = "none";
             document.querySelector(".container").style.display = "block";
         }
+
+        // Funkce pro spuštění drop timeru
+        function startDropTimer() {
+            let timeLeft = 120; // začínáme s 2 minutami
+            const dropTimeDisplay = document.getElementById("dropTime");
+
+            const dropInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                dropTimeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(dropInterval);
+                }
+            }, 1000);
+        }
     </script>
 </body>
 </html>
