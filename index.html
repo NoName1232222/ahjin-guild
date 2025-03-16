@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #282828;
+            background-color: #1e082d;
             color: #fff;
             text-align: center;
             padding: 50px;
@@ -15,14 +15,15 @@
         h1 {
             font-size: 3em;
             margin-bottom: 20px;
+            color: #a76fff;
         }
         .button-container {
             margin-bottom: 30px;
         }
         button {
-            background-color: #3b3b3b;
+            background-color: #3e0c54;
             color: white;
-            border: 1px solid #5c5c5c;
+            border: 1px solid #6a247f;
             padding: 10px 20px;
             margin: 10px;
             font-size: 1em;
@@ -31,13 +32,31 @@
             transition: 0.3s;
         }
         button:hover {
-            background-color: #555;
+            background-color: #5d2c78;
         }
         .guild-info {
-            background-color: #333;
+            background-color: #2b0a3e;
             border-radius: 10px;
             padding: 20px;
             margin: 20px;
+        }
+        ul.member-list {
+            list-style: none;
+            padding: 0;
+        }
+        ul.member-list li {
+            background-color: #4a0e68;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+        }
+        .member-role {
+            font-style: italic;
+            color: #c785ff;
         }
         .boss-list {
             display: grid;
@@ -46,7 +65,7 @@
             margin-top: 20px;
         }
         .boss {
-            background-color: #444;
+            background-color: #4a0e68;
             padding: 15px;
             border-radius: 8px;
             text-align: center;
@@ -54,6 +73,7 @@
         .boss-name {
             font-size: 1.5em;
             margin-bottom: 10px;
+            color: #d4a5ff;
         }
         .timer {
             font-size: 1.2em;
@@ -62,10 +82,10 @@
         }
         .back-button {
             margin-top: 20px;
-            background-color: #ff5555;
+            background-color: #a629a6;
         }
         .back-button:hover {
-            background-color: #ff3333;
+            background-color: #bf3dbf;
         }
     </style>
 </head>
@@ -78,21 +98,39 @@
 
     <!-- Member List Page -->
     <div id="memberListPage" class="guild-info" style="display: none;">
-        <h2>Členové Guildy</h2>
-        <ul>
-            <li>Hiro Suny -- Owner -- Warrior</li>
-            <li>BabyGojo -- Officer -- Warrior</li>
-            <li>Denca -- Officer -- Mag</li>
-            <li>Legacy -- Officer -- Warrior</li>
-            <li>Shadow -- Member -- Warrior</li>
-            <li>ElecDeemTV -- Member -- Mag</li>
+        <h2 style="color: #d4a5ff;">Členové Guildy</h2>
+        <ul class="member-list">
+            <li>
+                <span>Hiro Suny</span>
+                <span class="member-role">Owner -- Warrior</span>
+            </li>
+            <li>
+                <span>BabyGojo</span>
+                <span class="member-role">Officer -- Warrior</span>
+            </li>
+            <li>
+                <span>Denca</span>
+                <span class="member-role">Officer -- Mag</span>
+            </li>
+            <li>
+                <span>Legacy</span>
+                <span class="member-role">Officer -- Warrior</span>
+            </li>
+            <li>
+                <span>Shadow</span>
+                <span class="member-role">Member -- Warrior</span>
+            </li>
+            <li>
+                <span>ElecDeemTV</span>
+                <span class="member-role">Member -- Mag</span>
+            </li>
         </ul>
         <button class="back-button" onclick="goBack()">Zpět na hlavní stránku</button>
     </div>
 
     <!-- Boss List Page -->
     <div id="bossListPage" class="guild-info" style="display: none;">
-        <h2>Guild Bossové</h2>
+        <h2 style="color: #d4a5ff;">Guild Bossové</h2>
         <div class="boss-list">
             <div class="boss">
                 <p class="boss-name">Choas</p>
@@ -124,7 +162,6 @@
                 <div class="timer" id="timer-Kytka">30:00</div>
                 <button onclick="sendToDiscord('Kytka')">Odeslat na Discord</button>
             </div>
-            <!-- Missing bosses -->
             <div class="boss">
                 <p class="boss-name">Mesa</p>
                 <button onclick="startTimer('Mesa')">Spustit časovač</button>
@@ -181,13 +218,15 @@
                 timerElement.innerText = `${minutes}:${seconds}`;
                 countdown--;
 
+
+
                 if (countdown < 0) {
                     clearInterval(interval);
                     timerElement.innerText = 'Čas vypršel!';
                 }
             }, 1000);
         }
-
+        
         function sendToDiscord(bossName) {
             const webhookUrl = "https://discord.com/api/webhooks/1350794035152945235/sPZmb6YnHcCLgTaysSlCtwyaSb5n_RDyXYoYR8PljjEX--U6e_Ci3QHvEHKn9l9xETI8";
             const currentTime = new Date();
