@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #000; /* Černé pozadí */
+            background-color: #1a1a1a; /* Tmavé pozadí pro moderní vzhled */
             color: #fff;
             margin: 0;
             padding: 0;
@@ -17,18 +17,33 @@
             margin-top: 50px;
         }
         h1 {
-            font-size: 2.5em;
-            color: #fff;
+            font-size: 3em;
+            color: #ff5722; /* Oranžová pro název guildy */
+        }
+        .guild-info {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
+            margin-top: 30px;
+            font-size: 1.1em;
+            text-align: left;
+        }
+        .button-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
         }
         button {
             padding: 14px 30px;
             font-size: 1.2em;
-            background: linear-gradient(45deg, #8e24aa, #6a1b9a); /* Fialový gradient */
+            background: linear-gradient(45deg, #8e24aa, #6a1b9a);
             color: white;
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            margin: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         button:hover {
@@ -38,7 +53,7 @@
         .drop-timer {
             margin-top: 40px;
             font-size: 1.5em;
-            color: #9c27b0; /* Světlejší fialová */
+            color: #9c27b0;
             background: #333;
             padding: 20px;
             border-radius: 12px;
@@ -47,42 +62,39 @@
         .drop-timer p {
             margin: 0;
         }
-        .timer-button {
-            padding: 12px 25px;
+        .guild-info-tooltip {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #333;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
+            color: #fff;
             font-size: 1.1em;
-            background-color: #8e24aa;
-            border: none;
-            color: white;
+            max-width: 300px;
+        }
+        .guild-info-container {
+            position: relative;
+        }
+        .guild-image {
+            width: 150px;
+            height: 150px;
             border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: transform 0.3s ease;
+            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
         }
-        .timer-button:hover {
+        .guild-image:hover {
             transform: scale(1.05);
         }
-        .timer-input {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 1.1em;
-            border: 2px solid #9c27b0;
-            border-radius: 5px;
-            background-color: #222;
-            color: #fff;
-        }
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
-        .drop-timer input {
-            margin-top: 10px;
-        }
-        .drop-timer div {
-            margin-top: 10px;
+        .guild-info-tooltip p {
+            margin: 5px 0;
         }
         .boss-timers-page {
             padding: 20px;
-            background-color: #333; /* Černé pozadí */
+            background-color: #333;
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(138, 3, 148, 0.7);
             text-align: center;
@@ -112,7 +124,7 @@
             margin-top: 30px;
         }
         .boss-item {
-            background: #222; /* Tmavě šedé pozadí */
+            background: #222;
             padding: 20px;
             border-radius: 12px;
             width: 220px;
@@ -138,15 +150,30 @@
 <body>
     <div class="container">
         <h1>Guild Bossoové</h1>
-        <button onclick="viewBossTimers()">Kouknout se na časy bossů</button>
-        <div class="drop-timer" id="dropTimer">
-            <p>Čas na příští drop: <span id="dropTime">120:00</span></p>
-            <button class="timer-button" onclick="showPasswordInput()">Spustit drop</button>
-            <div id="passwordInputContainer" style="display: none;">
-                <input type="password" id="passwordInput" class="timer-input" placeholder="Zadejte heslo">
-                <button class="timer-button" onclick="checkPassword()">Ověřit</button>
-                <p id="errorMessage" class="error-message"></p>
+
+        <div class="guild-info">
+            <h2>Informace o guildě</h2>
+            <p>Guilda Bossoové je elitní skupina hráčů, kteří se specializují na rychlé zabíjení bossů a získávání vzácných předmětů. Pokud jste odvážní, připojte se k nám!</p>
+            <p>Naši členové mají přístup k exkluzivním informacím a časovačům bossů, které jim pomáhají vylepšovat jejich výbavu a strategii.</p>
+            <p>Naší misí je stát se nejlepší guildou v celém světě!</p>
+        </div>
+
+        <div class="button-container">
+            <button onclick="viewBossTimers()">Kouknout se na časy bossů</button>
+            <div class="drop-timer" id="dropTimer">
+                <p>Čas na příští drop: <span id="dropTime">120:00</span></p>
+                <button class="timer-button" onclick="startDropTimer()">Spustit drop</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Guild Info Tooltip -->
+    <div class="guild-info-container">
+        <img class="guild-image" src="https://via.placeholder.com/150" alt="Guild Image" id="guildImage" />
+        <div class="guild-info-tooltip" id="guildInfoTooltip">
+            <p><strong>Owner:</strong> Hiro Suny</p>
+            <p><strong>Guilda Bossoové</strong></p>
+            <p>Specializujeme se na rychlé zabíjení bossů a získávání vzácných předmětů.</p>
         </div>
     </div>
 
@@ -158,9 +185,17 @@
     </div>
 
     <script>
+        // Zobrazení a skrytí informací o guildě při najetí myší
+        document.getElementById('guildImage').addEventListener('mouseenter', function() {
+            document.getElementById('guildInfoTooltip').style.display = 'block';
+        });
+
+        document.getElementById('guildImage').addEventListener('mouseleave', function() {
+            document.getElementById('guildInfoTooltip').style.display = 'none';
+        });
+
         const bosses = ["Choas", "Pharaon", "Voli", "Drak", "Kytka", "Igor", "Kraken", "Arcano", "Mesa"];
         let timers = {};
-        const correctPassword = "Ahjin1959"; // Správné heslo
 
         // Funkce pro vytvoření časovačů bossů
         function createBossTimers() {
@@ -179,22 +214,6 @@
             });
         }
 
-        // Funkce pro zobrazení pole pro zadání hesla
-        function showPasswordInput() {
-            document.getElementById("passwordInputContainer").style.display = "block";
-        }
-
-        // Funkce pro kontrolu hesla
-        function checkPassword() {
-            const password = document.getElementById("passwordInput").value;
-            if (password === correctPassword) {
-                document.getElementById("errorMessage").textContent = "";
-                startDropTimer();
-            } else {
-                document.getElementById("errorMessage").textContent = "Špatné heslo!";
-            }
-        }
-
         // Funkce pro spuštění časovače bossů
         function startTimer(boss) {
             clearInterval(timers[boss].interval);
@@ -210,9 +229,6 @@
                     clearInterval(timers[boss].interval);
                 }
             }, 1000);
-
-            // Odeslání informací na Discord webhook s embedem
-            sendWebhookNotification(boss);
         }
 
         // Funkce pro aktualizaci časovače bossů
@@ -226,33 +242,6 @@
         function updateNextAvailableTime(boss) {
             const nextAvailable = new Date(timers[boss].nextAvailable).toLocaleString();
             document.getElementById(`next-${boss}`).textContent = `Další čas: ${nextAvailable}`;
-        }
-
-        // Funkce pro odeslání notifikace na Discord webhook
-        function sendWebhookNotification(event) {
-            const webhookURL = "https://discord.com/api/webhooks/1350762042365050930/aqFsXmDUx8pI_g4YKqc6ypR6wqyJ9UOkedByi6EOOw5mX25KRszAp5rVQ2gHnZjHME06";
-            const embed = {
-                title: `${event} Časovač Aktivován!`,
-                description: `${event} časovač byl spuštěn a odpočítává čas.`,
-                color: 0x9c27b0, // Fialová barva
-                fields: [
-                    {
-                        name: "Další dostupný čas:",
-                        value: new Date(timers[event].nextAvailable).toLocaleString(),
-                        inline: true
-                    }
-                ]
-            };
-            const payload = {
-                embeds: [embed],
-                username: "Guild Boss Notifier"
-            };
-
-            fetch(webhookURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
         }
 
         // Funkce pro zobrazení časovačů bossů
