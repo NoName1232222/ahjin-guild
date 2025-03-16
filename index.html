@@ -3,205 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guild Bossoové</title>
+    <title>Ahjin Guild</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #2c2c2c;
+            font-family: Arial, sans-serif;
+            background-color: #282828;
             color: #fff;
-            margin: 0;
-            padding: 0;
             text-align: center;
-        }
-        .container {
-            margin-top: 50px;
+            padding: 50px;
         }
         h1 {
-            font-size: 3.5em;
-            color: #ff9800;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-        .guild-info {
-            background: #3b3b3b;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
-            margin-top: 40px;
-            font-size: 1.2em;
-            text-align: left;
+            font-size: 3em;
+            margin-bottom: 20px;
         }
         .button-container {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
+            margin-bottom: 30px;
         }
         button {
-            padding: 15px 35px;
-            font-size: 1.2em;
-            background: linear-gradient(45deg, #6a1b9a, #8e24aa);
+            background-color: #3b3b3b;
             color: white;
-            border: none;
-            border-radius: 12px;
+            border: 1px solid #5c5c5c;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1em;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0px 4px 10px rgba(138, 3, 148, 0.5);
+            border-radius: 5px;
+            transition: 0.3s;
         }
         button:hover {
-            transform: scale(1.1);
-            box-shadow: 0px 0px 20px rgba(138, 3, 148, 0.7);
+            background-color: #555;
         }
-        .back-button {
-            padding: 12px 25px;
-            font-size: 1.1em;
-            background-color: #8e24aa;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            margin-top: 20px;
-        }
-        .back-button:hover {
-            transform: scale(1.05);
-        }
-        .guild-info-tooltip {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
+        .guild-info {
             background-color: #333;
+            border-radius: 10px;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
-            color: #fff;
-            font-size: 1.1em;
-            max-width: 300px;
-        }
-        .guild-info-container {
-            position: relative;
-        }
-        .member-list {
-            margin-top: 30px;
-            font-size: 1.2em;
-            color: #ffeb3b;
-        }
-        .member {
-            background: #444;
-            padding: 18px;
-            border-radius: 8px;
-            margin: 10px 0;
-            box-shadow: 0px 4px 10px rgba(138, 3, 148, 0.5);
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
-        .member:hover {
-            transform: scale(1.03);
-            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
-        }
-        .member-name {
-            font-weight: bold;
-            color: #ff5722;
-        }
-        .member-role {
-            color: #9c27b0;
-        }
-        .member-class {
-            color: #fbc02d;
-        }
-        .member-list .member .info {
-            margin-top: 5px;
+            margin: 20px;
         }
         .boss-list {
-            margin-top: 40px;
-            font-size: 1.2em;
-            color: #ffeb3b;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
         }
         .boss {
-            background: #444;
-            padding: 18px;
+            background-color: #444;
+            padding: 15px;
             border-radius: 8px;
-            margin: 10px 0;
-            box-shadow: 0px 4px 10px rgba(138, 3, 148, 0.5);
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
-        .boss:hover {
-            transform: scale(1.03);
-            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
+            text-align: center;
         }
         .boss-name {
-            font-weight: bold;
-            color: #ff5722;
+            font-size: 1.5em;
+            margin-bottom: 10px;
         }
         .timer {
-            font-size: 1.1em;
+            font-size: 1.2em;
+            margin: 10px 0;
             color: #00ff00;
-            margin-top: 10px;
         }
-        .boss button {
-            padding: 10px 20px;
-            background: #ff5722;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .back-button {
+            margin-top: 20px;
+            background-color: #ff5555;
         }
-        .boss button:hover {
-            background-color: #ff4081;
+        .back-button:hover {
+            background-color: #ff3333;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Guild Bossoové</h1>
-
-        <div class="button-container">
-            <button onclick="viewMemberList()">Seznam členů</button>
-            <button onclick="viewBossList()">Guild Bossové</button>
-        </div>
+    <h1>Ahjin Guild</h1>
+    <div class="button-container">
+        <button onclick="viewMemberList()">Seznam členů</button>
+        <button onclick="viewBossList()">Guild Bossové</button>
     </div>
 
     <!-- Member List Page -->
     <div id="memberListPage" class="guild-info" style="display: none;">
         <h2>Členové Guildy</h2>
-        <div class="member-list">
-            <div class="member">
-                <p class="member-name">Hiro Suny</p>
-                <p class="info">Role: Owner</p>
-                <p class="info">Třída: Warrior</p>
-            </div>
-            <div class="member">
-                <p class="member-name">BabyGojo</p>
-                <p class="info">Role: Officer</p>
-                <p class="info">Třída: Warrior</p>
-            </div>
-            <div class="member">
-                <p class="member-name">Denca</p>
-                <p class="info">Role: Officer</p>
-                <p class="info">Třída: Mag</p>
-            </div>
-            <div class="member">
-                <p class="member-name">Legacy</p>
-                <p class="info">Role: Officer</p>
-                <p class="info">Třída: Warrior</p>
-            </div>
-            <div class="member">
-                <p class="member-name">Shadow</p>
-                <p class="info">Role: Member</p>
-                <p class="info">Třída: Warrior</p>
-            </div>
-            <div class="member">
-                <p class="member-name">ElecDeemTV</p>
-                <p class="info">Role: Member</p>
-                <p class="info">Třída: Mag</p>
-            </div>
-        </div>
+        <ul>
+            <li>Hiro Suny -- Owner -- Warrior</li>
+            <li>BabyGojo -- Officer -- Warrior</li>
+            <li>Denca -- Officer -- Mag</li>
+            <li>Legacy -- Officer -- Warrior</li>
+            <li>Shadow -- Member -- Warrior</li>
+            <li>ElecDeemTV -- Member -- Mag</li>
+        </ul>
         <button class="back-button" onclick="goBack()">Zpět na hlavní stránku</button>
     </div>
 
@@ -213,26 +98,56 @@
                 <p class="boss-name">Choas</p>
                 <button onclick="startTimer('Choas')">Spustit časovač</button>
                 <div class="timer" id="timer-Choas">30:00</div>
+                <button onclick="sendToDiscord('Choas')">Odeslat na Discord</button>
             </div>
             <div class="boss">
                 <p class="boss-name">Pharaon</p>
                 <button onclick="startTimer('Pharaon')">Spustit časovač</button>
                 <div class="timer" id="timer-Pharaon">30:00</div>
+                <button onclick="sendToDiscord('Pharaon')">Odeslat na Discord</button>
             </div>
             <div class="boss">
                 <p class="boss-name">Voli</p>
                 <button onclick="startTimer('Voli')">Spustit časovač</button>
                 <div class="timer" id="timer-Voli">30:00</div>
+                <button onclick="sendToDiscord('Voli')">Odeslat na Discord</button>
             </div>
             <div class="boss">
                 <p class="boss-name">Drak</p>
                 <button onclick="startTimer('Drak')">Spustit časovač</button>
                 <div class="timer" id="timer-Drak">30:00</div>
+                <button onclick="sendToDiscord('Drak')">Odeslat na Discord</button>
             </div>
             <div class="boss">
                 <p class="boss-name">Kytka</p>
                 <button onclick="startTimer('Kytka')">Spustit časovač</button>
                 <div class="timer" id="timer-Kytka">30:00</div>
+                <button onclick="sendToDiscord('Kytka')">Odeslat na Discord</button>
+            </div>
+            <!-- Missing bosses -->
+            <div class="boss">
+                <p class="boss-name">Mesa</p>
+                <button onclick="startTimer('Mesa')">Spustit časovač</button>
+                <div class="timer" id="timer-Mesa">30:00</div>
+                <button onclick="sendToDiscord('Mesa')">Odeslat na Discord</button>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Igor</p>
+                <button onclick="startTimer('Igor')">Spustit časovač</button>
+                <div class="timer" id="timer-Igor">30:00</div>
+                <button onclick="sendToDiscord('Igor')">Odeslat na Discord</button>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Kraken</p>
+                <button onclick="startTimer('Kraken')">Spustit časovač</button>
+                <div class="timer" id="timer-Kraken">30:00</div>
+                <button onclick="sendToDiscord('Kraken')">Odeslat na Discord</button>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Arcano</p>
+                <button onclick="startTimer('Arcano')">Spustit časovač</button>
+                <div class="timer" id="timer-Arcano">30:00</div>
+                <button onclick="sendToDiscord('Arcano')">Odeslat na Discord</button>
             </div>
         </div>
         <button class="back-button" onclick="goBack()">Zpět na hlavní stránku</button>
@@ -254,20 +169,52 @@
             document.getElementById('bossListPage').style.display = 'none';
         }
 
-        function startTimer(boss) {
-            let timer = document.getElementById(`timer-${boss}`);
-            let time = 30 * 60; // 30 minutes in seconds
+        function startTimer(bossName) {
+            let countdown = 30 * 60;
+            let timerElement = document.getElementById('timer-' + bossName);
             let interval = setInterval(function() {
-                let minutes = Math.floor(time / 60);
-                let seconds = time % 60;
-                timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                time--;
+                let minutes = Math.floor(countdown / 60);
+                let seconds = countdown % 60;
+                if (seconds < 10) {
+                    seconds = '0' + seconds;
+                }
+                timerElement.innerText = `${minutes}:${seconds}`;
+                countdown--;
 
-                if (time < 0) {
+                if (countdown < 0) {
                     clearInterval(interval);
-                    timer.textContent = "Čas vypršel!";
+                    timerElement.innerText = 'Čas vypršel!';
                 }
             }, 1000);
+        }
+
+        function sendToDiscord(bossName) {
+            const webhookUrl = "https://discord.com/api/webhooks/1350794035152945235/sPZmb6YnHcCLgTaysSlCtwyaSb5n_RDyXYoYR8PljjEX--U6e_Ci3QHvEHKn9l9xETI8";
+            const currentTime = new Date();
+            const twoHoursLater = new Date(currentTime.getTime() + 2 * 60 * 60 * 1000);
+
+            const embedMessage = {
+                "embeds": [{
+                    "title": `${bossName} - Můžete jít na bosse!`,
+                    "description": `Můžete jít na bosse **${bossName}** právě teď!\nPříští možnost za dvě hodiny: ${twoHoursLater.toLocaleTimeString()}.\nBuďte připraveni!`,
+                    "color": 0x00ff00
+                }]
+            };
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(embedMessage)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Webhook odeslán:", data);
+            })
+            .catch(error => {
+                console.error("Chyba při odesílání webhooku:", error);
+            });
         }
     </script>
 </body>
