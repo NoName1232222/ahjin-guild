@@ -3,73 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinity</title>
+    <title>Guild Bossoové</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #000; /* Černé pozadí */
+            color: #fff;
             margin: 0;
             padding: 0;
-            background: black;
-            color: white;
             text-align: center;
         }
         .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
+            margin-top: 50px;
         }
         h1 {
-            font-size: 50px;
-            margin: 0;
+            font-size: 2.5em;
+            color: #fff;
+        }
+        button {
+            padding: 14px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #8e24aa, #6a1b9a); /* Fialový gradient */
             color: white;
-        }
-        p {
-            font-size: 20px;
-            color: gray;
-        }
-        .btn {
-            background: white;
-            color: black;
-            padding: 15px 30px;
             border: none;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 18px;
-            margin-top: 20px;
-            border-radius: 5px;
+            margin: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .btn:hover {
-            background: gray;
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
         }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 30px;
-            background: #111;
+        .drop-timer {
+            margin-top: 40px;
+            font-size: 1.5em;
+            color: #9c27b0; /* Světlejší fialová */
+            background: #333;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
         }
-        .navbar a {
+        .drop-timer p {
+            margin: 0;
+        }
+        .timer-button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            background-color: #8e24aa;
+            border: none;
             color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
         }
-        .navbar a:hover {
-            color: gray;
+        .timer-button:hover {
+            transform: scale(1.05);
+        }
+        .timer-input {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1.1em;
+            border: 2px solid #9c27b0;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        .drop-timer input {
+            margin-top: 10px;
+        }
+        .drop-timer div {
+            margin-top: 10px;
+        }
+        .boss-timers-page {
+            padding: 20px;
+            background-color: #333; /* Černé pozadí */
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(138, 3, 148, 0.7);
+            text-align: center;
+            margin: 50px auto;
+            width: 80%;
+            max-width: 900px;
+        }
+        .back-button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            background-color: #8e24aa;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+        .boss-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .boss-item {
+            background: #222; /* Tmavě šedé pozadí */
+            padding: 20px;
+            border-radius: 12px;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
+            transition: transform 0.3s ease-in-out;
+        }
+        .boss-item:hover {
+            transform: scale(1.05);
+        }
+        .timer {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #9c27b0;
+        }
+        .next-available-time {
+            margin-top: 15px;
+            color: #ffeb3b;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </div>
     <div class="container">
-        <h1>Vítejte na Infinity</h1>
-        <p>Objevte nekonečné možnosti s naší stránkou.</p>
-        <button class="btn">Zjistit více</button>
+        <h1>Guild Bossoové</h1>
+        <button onclick="viewBossTimers()">Kouknout se na časy bossů</button>
+        <div class="drop-timer" id="dropTimer">
+            <p>Čas na příští drop: <span id="dropTime">120:00</span></p>
+            <button class="timer-button" onclick="showPasswordInput()">Spustit drop</button>
+            <div id="passwordInputContainer" style="display: none;">
+                <input type="password" id="passwordInput" class="timer-input" placeholder="Zadejte heslo">
+                <button class="timer-button" onclick="checkPassword()">Ověřit</button>
+                <p id="errorMessage" class="error-message"></p>
+            </div>
+        </div>
     </div>
+
+    <!-- Boss Timers Page -->
+    <div id="bossTimersPage" class="boss-timers-page" style="display: none;">
+        <h2>Časy Bossů</h2>
+        <div id="bossTimers" class="boss-list"></div>
+        <button class="back-button" onclick="goBack()">Zpět na hlavní stránku</button>
+    </div>
+
+    <script>
+        const bosses = ["Choas", "Pharaon", "Voli", "Drak", "Kytka", "Igor", "Kraken", "Arcano", "Mesa"];
+        let timers = {};
+        const correctPassword = "Ahjin1959"; // Správné heslo
+
+        // Funkce pro vytvoření časovačů bossů
+        function createBossTimers() {
+            const bossTimersDiv = document.getElementById("bossTimers");
+            bosses.forEach(boss => {
+                const bossDiv = document.createElement("div");
+                bossDiv.classList.add("boss-item");
+                bossDiv.innerHTML = `
+                    <p><strong>${boss}</strong></p>
+                    <button onclick="startTimer('${boss}')">Spustit časovač</button>
+                    <div class="timer" id="timer-${boss}">30:00</div>
+                    <div class="next-available-time" id="next-${boss}">Další čas: N/A</div>
+                `;
+                bossTimersDiv.appendChild(bossDiv);
+                timers[boss] = { timeLeft: 1800, isCooldown: false, interval: null, nextAvailable: 0 };
+            });
+        }
+
+        // Funkce pro zobrazení pole pro zadání hesla
+        function showPasswordInput() {
+            document.getElementById("passwordInputContainer").style.display = "block";
+        }
+
+        // Funkce pro kontrolu hesla
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === correctPassword) {
+                document.getElementById("errorMessage").textContent = "";
+                startDropTimer();
+            } else {
+                document.getElementById("errorMessage").textContent = "Špatné heslo!";
+            }
+        }
+
+        // Funkce pro spuštění časovače bossů
+        function startTimer(boss) {
+            clearInterval(timers[boss].interval);
+            timers[boss].timeLeft = timers[boss].isCooldown ? 7200 : 1800;
+            timers[boss].isCooldown = !timers[boss].isCooldown;
+            timers[boss].nextAvailable = Date.now() + (timers[boss].timeLeft * 1000);  // Čas, kdy bude možné znovu jít
+            updateTimer(boss);
+            updateNextAvailableTime(boss);
+            timers[boss].interval = setInterval(() => {
+                timers[boss].timeLeft--;
+                updateTimer(boss);
+                if (timers[boss].timeLeft <= 0) {
+                    clearInterval(timers[boss].interval);
+                }
+            }, 1000);
+
+            // Odeslání informací na Discord webhook s embedem
+            sendWebhookNotification(boss);
+        }
+
+        // Funkce pro aktualizaci časovače bossů
+        function updateTimer(boss) {
+            let minutes = Math.floor(timers[boss].timeLeft / 60);
+            let seconds = timers[boss].timeLeft % 60;
+            document.getElementById(`timer-${boss}`).textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Funkce pro aktualizaci času, kdy bude možné znovu jít na bosse
+        function updateNextAvailableTime(boss) {
+            const nextAvailable = new Date(timers[boss].nextAvailable).toLocaleString();
+            document.getElementById(`next-${boss}`).textContent = `Další čas: ${nextAvailable}`;
+        }
+
+        // Funkce pro odeslání notifikace na Discord webhook
+        function sendWebhookNotification(event) {
+            const webhookURL = "https://discord.com/api/webhooks/1350762042365050930/aqFsXmDUx8pI_g4YKqc6ypR6wqyJ9UOkedByi6EOOw5mX25KRszAp5rVQ2gHnZjHME06";
+            const embed = {
+                title: `${event} Časovač Aktivován!`,
+                description: `${event} časovač byl spuštěn a odpočítává čas.`,
+                color: 0x9c27b0, // Fialová barva
+                fields: [
+                    {
+                        name: "Další dostupný čas:",
+                        value: new Date(timers[event].nextAvailable).toLocaleString(),
+                        inline: true
+                    }
+                ]
+            };
+            const payload = {
+                embeds: [embed],
+                username: "Guild Boss Notifier"
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+        }
+
+        // Funkce pro zobrazení časovačů bossů
+        function viewBossTimers() {
+            createBossTimers();
+            document.getElementById("bossTimersPage").style.display = "block";
+            document.querySelector(".container").style.display = "none";
+        }
+
+        // Funkce pro návrat na hlavní stránku
+        function goBack() {
+            document.getElementById("bossTimersPage").style.display = "none";
+            document.querySelector(".container").style.display = "block";
+        }
+    </script>
 </body>
 </html>
