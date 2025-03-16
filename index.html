@@ -50,18 +50,6 @@
             transform: scale(1.1);
             box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
         }
-        .drop-timer {
-            margin-top: 40px;
-            font-size: 1.5em;
-            color: #9c27b0;
-            background: #333;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
-        }
-        .drop-timer p {
-            margin: 0;
-        }
         .guild-info-tooltip {
             display: none;
             position: absolute;
@@ -79,28 +67,28 @@
         .guild-info-container {
             position: relative;
         }
-        .guild-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
+        .member-list {
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: #ffeb3b;
         }
-        .guild-image:hover {
-            transform: scale(1.05);
+        .member {
+            background: #444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0px 0px 10px rgba(138, 3, 148, 0.7);
+            text-align: left;
         }
-        .guild-info-tooltip p {
-            margin: 5px 0;
+        .member-name {
+            font-weight: bold;
+            color: #ff5722;
         }
-        .boss-timers-page {
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(138, 3, 148, 0.7);
-            text-align: center;
-            margin: 50px auto;
-            width: 80%;
-            max-width: 900px;
+        .member-role {
+            color: #9c27b0;
+        }
+        .member-class {
+            color: #fbc02d;
         }
         .back-button {
             padding: 12px 25px;
@@ -117,33 +105,25 @@
             transform: scale(1.05);
         }
         .boss-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: #ffeb3b;
         }
-        .boss-item {
-            background: #222;
-            padding: 20px;
-            border-radius: 12px;
-            width: 220px;
-            text-align: center;
-            box-shadow: 0px 0px 15px rgba(138, 3, 148, 0.7);
-            transition: transform 0.3s ease-in-out;
+        .boss {
+            background: #444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0px 0px 10px rgba(138, 3, 148, 0.7);
+            text-align: left;
         }
-        .boss-item:hover {
-            transform: scale(1.05);
+        .boss-name {
+            font-weight: bold;
+            color: #ff5722;
         }
         .timer {
-            font-size: 1.2em;
-            margin-top: 10px;
-            color: #9c27b0;
-        }
-        .next-available-time {
-            margin-top: 15px;
-            color: #ffeb3b;
             font-size: 1.1em;
+            color: #00ff00;
         }
     </style>
 </head>
@@ -151,77 +131,131 @@
     <div class="container">
         <h1>Guild Bossoové</h1>
 
-        <div class="guild-info">
-            <h2>Informace o guildě</h2>
-            <p>Guilda Bossoové je elitní skupina hráčů, kteří se specializují na rychlé zabíjení bossů a získávání vzácných předmětů. Pokud jste odvážní, připojte se k nám!</p>
-            <p>Naši členové mají přístup k exkluzivním informacím a časovačům bossů, které jim pomáhají vylepšovat jejich výbavu a strategii.</p>
-            <p>Naší misí je stát se nejlepší guildou v celém světě!</p>
-        </div>
-
         <div class="button-container">
-            <button onclick="viewBossTimers()">Kouknout se na časy bossů</button>
-            <div class="drop-timer" id="dropTimer">
-                <p>Čas na příští drop: <span id="dropTime">120:00</span></p>
-                <button class="timer-button" onclick="startDropTimer()">Spustit drop</button>
+            <button onclick="viewMemberList()">Seznam členů</button>
+            <button onclick="viewBossList()">Guild Bossové</button>
+        </div>
+    </div>
+
+    <!-- Member List Page -->
+    <div id="memberListPage" class="guild-info" style="display: none;">
+        <h2>Členové Guildy</h2>
+        <div class="member-list">
+            <div class="member">
+                <p class="member-name">Hiro Suny</p>
+                <p class="member-role">Role: Owner</p>
+                <p class="member-class">Třída: Warrior</p>
+            </div>
+            <div class="member">
+                <p class="member-name">BabyGojo</p>
+                <p class="member-role">Role: Officer</p>
+                <p class="member-class">Třída: Warrior</p>
+            </div>
+            <div class="member">
+                <p class="member-name">Denca</p>
+                <p class="member-role">Role: Officer</p>
+                <p class="member-class">Třída: Mag</p>
+            </div>
+            <div class="member">
+                <p class="member-name">Legacy</p>
+                <p class="member-role">Role: Officer</p>
+                <p class="member-class">Třída: Warrior</p>
+            </div>
+            <div class="member">
+                <p class="member-name">Shadow</p>
+                <p class="member-role">Role: Member</p>
+                <p class="member-class">Třída: Warrior</p>
+            </div>
+            <div class="member">
+                <p class="member-name">ElecDeemTV</p>
+                <p class="member-role">Role: Member</p>
+                <p class="member-class">Třída: Mag</p>
             </div>
         </div>
+        <button class="back-button" onclick="goBack()">Zpět na hlavní stránku</button>
     </div>
 
-    <!-- Guild Info Tooltip -->
-    <div class="guild-info-container">
-        <img class="guild-image" src="https://via.placeholder.com/150" alt="Guild Image" id="guildImage" />
-        <div class="guild-info-tooltip" id="guildInfoTooltip">
-            <p><strong>Owner:</strong> Hiro Suny</p>
-            <p><strong>Guilda Bossoové</strong></p>
-            <p>Specializujeme se na rychlé zabíjení bossů a získávání vzácných předmětů.</p>
+    <!-- Boss List Page -->
+    <div id="bossListPage" class="guild-info" style="display: none;">
+        <h2>Guild Bossové</h2>
+        <div class="boss-list">
+            <div class="boss">
+                <p class="boss-name">Choas</p>
+                <button onclick="startTimer('Choas')">Spustit časovač</button>
+                <div class="timer" id="timer-Choas">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Pharaon</p>
+                <button onclick="startTimer('Pharaon')">Spustit časovač</button>
+                <div class="timer" id="timer-Pharaon">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Voli</p>
+                <button onclick="startTimer('Voli')">Spustit časovač</button>
+                <div class="timer" id="timer-Voli">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Drak</p>
+                <button onclick="startTimer('Drak')">Spustit časovač</button>
+                <div class="timer" id="timer-Drak">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Kytka</p>
+                <button onclick="startTimer('Kytka')">Spustit časovač</button>
+                <div class="timer" id="timer-Kytka">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Igor</p>
+                <button onclick="startTimer('Igor')">Spustit časovač</button>
+                <div class="timer" id="timer-Igor">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Kraken</p>
+                <button onclick="startTimer('Kraken')">Spustit časovač</button>
+                <div class="timer" id="timer-Kraken">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Arcano</p>
+                <button onclick="startTimer('Arcano')">Spustit časovač</button>
+                <div class="timer" id="timer-Arcano">30:00</div>
+            </div>
+            <div class="boss">
+                <p class="boss-name">Mesa</p>
+                <button onclick="startTimer('Mesa')">Spustit časovač</button>
+                <div class="timer" id="timer-Mesa">30:00</div>
+            </div>
         </div>
-    </div>
-
-    <!-- Boss Timers Page -->
-    <div id="bossTimersPage" class="boss-timers-page" style="display: none;">
-        <h2>Časy Bossů</h2>
-        <div id="bossTimers" class="boss-list"></div>
         <button class="back-button" onclick="goBack()">Zpět na hlavní stránku</button>
     </div>
 
     <script>
-        // Zobrazení a skrytí informací o guildě při najetí myší
-        document.getElementById('guildImage').addEventListener('mouseenter', function() {
-            document.getElementById('guildInfoTooltip').style.display = 'block';
-        });
-
-        document.getElementById('guildImage').addEventListener('mouseleave', function() {
-            document.getElementById('guildInfoTooltip').style.display = 'none';
-        });
-
-        const bosses = ["Choas", "Pharaon", "Voli", "Drak", "Kytka", "Igor", "Kraken", "Arcano", "Mesa"];
-        let timers = {};
-
-        // Funkce pro vytvoření časovačů bossů
-        function createBossTimers() {
-            const bossTimersDiv = document.getElementById("bossTimers");
-            bosses.forEach(boss => {
-                const bossDiv = document.createElement("div");
-                bossDiv.classList.add("boss-item");
-                bossDiv.innerHTML = `
-                    <p><strong>${boss}</strong></p>
-                    <button onclick="startTimer('${boss}')">Spustit časovač</button>
-                    <div class="timer" id="timer-${boss}">30:00</div>
-                    <div class="next-available-time" id="next-${boss}">Další čas: N/A</div>
-                `;
-                bossTimersDiv.appendChild(bossDiv);
-                timers[boss] = { timeLeft: 1800, isCooldown: false, interval: null, nextAvailable: 0 };
-            });
+        // Funkce pro zobrazení seznamu členů
+        function viewMemberList() {
+            document.getElementById("memberListPage").style.display = "block";
+            document.getElementById("bossListPage").style.display = "none";
+            document.querySelector(".container").style.display = "none";
         }
+
+        // Funkce pro zobrazení guild bossů
+        function viewBossList() {
+            document.getElementById("bossListPage").style.display = "block";
+            document.getElementById("memberListPage").style.display = "none";
+            document.querySelector(".container").style.display = "none";
+        }
+
+        // Funkce pro návrat na hlavní stránku
+        function goBack() {
+            document.getElementById("memberListPage").style.display = "none";
+            document.getElementById("bossListPage").style.display = "none";
+            document.querySelector(".container").style.display = "block";
+        }
+
+        let timers = {};
 
         // Funkce pro spuštění časovače bossů
         function startTimer(boss) {
-            clearInterval(timers[boss].interval);
-            timers[boss].timeLeft = timers[boss].isCooldown ? 7200 : 1800;
-            timers[boss].isCooldown = !timers[boss].isCooldown;
-            timers[boss].nextAvailable = Date.now() + (timers[boss].timeLeft * 1000);  // Čas, kdy bude možné znovu jít
-            updateTimer(boss);
-            updateNextAvailableTime(boss);
+            clearInterval(timers[boss]?.interval);
+            timers[boss] = { timeLeft: 1800, interval: null };
             timers[boss].interval = setInterval(() => {
                 timers[boss].timeLeft--;
                 updateTimer(boss);
@@ -236,41 +270,6 @@
             let minutes = Math.floor(timers[boss].timeLeft / 60);
             let seconds = timers[boss].timeLeft % 60;
             document.getElementById(`timer-${boss}`).textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-
-        // Funkce pro aktualizaci času, kdy bude možné znovu jít na bosse
-        function updateNextAvailableTime(boss) {
-            const nextAvailable = new Date(timers[boss].nextAvailable).toLocaleString();
-            document.getElementById(`next-${boss}`).textContent = `Další čas: ${nextAvailable}`;
-        }
-
-        // Funkce pro zobrazení časovačů bossů
-        function viewBossTimers() {
-            createBossTimers();
-            document.getElementById("bossTimersPage").style.display = "block";
-            document.querySelector(".container").style.display = "none";
-        }
-
-        // Funkce pro návrat na hlavní stránku
-        function goBack() {
-            document.getElementById("bossTimersPage").style.display = "none";
-            document.querySelector(".container").style.display = "block";
-        }
-
-        // Funkce pro spuštění drop timeru
-        function startDropTimer() {
-            let timeLeft = 120; // začínáme s 2 minutami
-            const dropTimeDisplay = document.getElementById("dropTime");
-
-            const dropInterval = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                dropTimeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                if (timeLeft <= 0) {
-                    clearInterval(dropInterval);
-                }
-            }, 1000);
         }
     </script>
 </body>
