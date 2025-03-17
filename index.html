@@ -105,6 +105,8 @@
             <li><span>Brkodlak</span><span class="member-role">Member -- Warrior</span></li>
             <li><span>Gkush420_</span><span class="member-role">Member -- Warrior</span></li>
             <li><span>Michals22</span><span class="member-role">Member -- Archer</span></li>
+            <li><span>DarkFox</span><span class="member-role">Member -- Assassin</span></li>
+            <li><span>AceKiller</span><span class="member-role">Member -- Warrior</span></li>
         </ul>
 
         <h3>Spojenci</h3>
@@ -113,6 +115,12 @@
             <li><span>Joe</span><span class="member-role">Officer -- KZVP -- Mag</span></li>
             <li><span>Minami</span><span class="member-role">Member -- KZVP -- Mag</span></li>
         </ul>
+
+        <p>Naši členové a spojenci tvoří silnou komunitu, která je vždy připravena na výzvy. Spojujeme síly s hráči, kteří mají vášeň pro hru a chtějí růst spolu s námi. Ať už jde o raidování, bossy nebo jiné herní aktivity, každý člen má své místo a důležitost v guildě.</p>
+        
+        <button class="back-button" onclick="goBack()">Zpět</button>
+    </div>
+
 
         <button class="back-button" onclick="goBack()">Zpět</button>
     </div>
@@ -152,11 +160,10 @@
         function startTimer(bossName) {
             let countdown = 30 * 60;
             let timerElement = document.getElementById('timer-' + bossName);
-            let interval = setInterval(function() {
+            let interval = setInterval(() => {
                 let minutes = Math.floor(countdown / 60);
                 let seconds = countdown % 60;
-                if (seconds < 10) seconds = '0' + seconds;
-                timerElement.innerText = `${minutes}:${seconds}`;
+                timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
                 countdown--;
                 if (countdown < 0) clearInterval(interval);
             }, 1000);
